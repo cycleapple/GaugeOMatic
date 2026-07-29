@@ -86,7 +86,7 @@ public partial class ConfigWindow : Window, IDisposable
         ImGui.TableNextColumn();
 
         // GeneralButton("Settings", Cog, Settings, "General Settings");
-        GeneralButton(66313, Help, "Help");
+        GeneralButton(66313, Help, "說明");
 
         var jobTab = Configuration.JobTab;
         var input = false;

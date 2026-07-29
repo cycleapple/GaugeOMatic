@@ -1,8 +1,8 @@
 {
     "Author": "ItsBexy",
     "Name": "Gauge-O-Matic",
-    "Punchline": "Enhance and customize job gauges.",
-    "Description": "Gauge-O-Matic allows you to customize your job gauges by adding extra counters, bars, and indicators in a variety of styles",
+    "Punchline": "強化並自訂職業量譜。",
+    "Description": "可在職業量譜中加入多種樣式的額外計數器、量譜與狀態指示器。",
     "InternalName": "GaugeOMatic",
     "ApplicableVersion": "any",
     "Tags": [

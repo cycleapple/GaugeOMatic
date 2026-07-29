@@ -50,7 +50,7 @@ public sealed partial class GaugeOMatic : IDalamudPlugin
 
         Framework.Update += UpdatePlayerData;
 
-        CommandManager.AddHandler(CommandName, new(OnCommand) { HelpMessage = "Open Gauge-O-Matic Settings" });
+        CommandManager.AddHandler(CommandName, new(OnCommand) { HelpMessage = "開啟 Gauge-O-Matic 設定" });
     }
 
     public void Dispose()

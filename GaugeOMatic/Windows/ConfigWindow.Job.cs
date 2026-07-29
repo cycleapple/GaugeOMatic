@@ -56,7 +56,7 @@ public partial class ConfigWindow
 
     private static void TweakTab(JobModule jobModule)
     {
-        using var ti = ImRaii.TabItem($"Tweaks##{jobModule.Abbr}TweaksTab");
+        using var ti = ImRaii.TabItem($"調整##{jobModule.Abbr}TweaksTab");
         if (ti)
         {
             JobModuleTab = JobModuleTabs.Tweaks;
@@ -73,7 +73,7 @@ public partial class ConfigWindow
 
     private static void TrackerTab(JobModule jobModule)
     {
-        using var ti = ImRaii.TabItem("Trackers");
+        using var ti = ImRaii.TabItem("追蹤器##Trackers");
 
         if (ti)
         {
@@ -83,12 +83,12 @@ public partial class ConfigWindow
             {
                 if (table.Success) {
                     ImGui.TableSetupColumn("");
-                    ImGui.TableSetupColumn("Tracker");
+                    ImGui.TableSetupColumn("追蹤器##Tracker");
                     ImGui.TableSetupColumn("");
-                    ImGui.TableSetupColumn("Widget");
+                    ImGui.TableSetupColumn("元件##Widget");
                     ImGui.TableSetupColumn("");
-                    ImGui.TableSetupColumn("Pinned to");
-                    ImGui.TableSetupColumn("Test");
+                    ImGui.TableSetupColumn("固定至##PinnedTo");
+                    ImGui.TableSetupColumn("測試##Test");
 
                     TableHeadersRowNoHover(new(1));
 
@@ -105,10 +105,10 @@ public partial class ConfigWindow
 
                     ImGui.TableNextRow();
                     ImGui.TableNextColumn();
-                    if (ImGuiComponents.IconButtonWithText(Plus, "Add##addBlank")) jobModule.AddBlankTracker();
+                    if (ImGuiComponents.IconButtonWithText(Plus, "新增##addBlank")) jobModule.AddBlankTracker();
 
                     ImGui.TableNextColumn();
-                    if (ImGuiComponents.IconButtonWithText(ObjectGroup, "Presets##openPresets")) GaugeOMatic.PresetWindow.IsOpen = !GaugeOMatic.PresetWindow.IsOpen;
+                    if (ImGuiComponents.IconButtonWithText(ObjectGroup, "預設##openPresets")) GaugeOMatic.PresetWindow.IsOpen = !GaugeOMatic.PresetWindow.IsOpen;
                 }
             }
 
@@ -116,10 +116,10 @@ public partial class ConfigWindow
             ImGui.Spacing();
             ImGui.Spacing();
             WriteIcon(ArrowsUpDownLeftRight, null, new(255, 255, 255, 128));
-            ImGui.TextDisabled("Shift + Click & Drag to reposition widgets");
+            ImGui.TextDisabled("Shift + 點擊拖曳可移動元件");
 
             WriteIcon(ExpandAlt, null, new(255, 255, 255, 128));
-            ImGui.TextDisabled("Shift + Scroll to resize widgets");
+            ImGui.TextDisabled("Shift + 滾輪可縮放元件");
         }
     }
 

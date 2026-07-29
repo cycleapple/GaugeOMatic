@@ -39,13 +39,13 @@ public partial class ConfigWindow
 
             if (ImGui.IsItemHovered()) trackerConfig.DrawTooltip();
 
-            tracker.TrackerDropdown.Draw("[ Track... ]", 180f);
+            tracker.TrackerDropdown.Draw("[ 選擇追蹤項目…… ]", 180f);
 
             ImGui.TableNextColumn();
             LayerControls(tracker, hash, index);
 
             ImGui.TableNextColumn();
-            tracker.WidgetMenuTable.Draw("[Select Widget]", 200f);
+            tracker.WidgetMenuTable.Draw("[選擇元件]", 200f);
 
             ImGui.TableNextColumn();
             WidgetControls(tracker, hash, index);
@@ -117,7 +117,7 @@ public partial class ConfigWindow
                 tracker.Window.Position = FindWindowPosition(tracker, index);
             }
 
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Widget Settings");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("元件設定");
         }
     }
 
@@ -146,7 +146,7 @@ public partial class ConfigWindow
             ImGui.SetClipboardText(WidgetClipboard);
         }
 
-        if (ImGui.IsItemHovered()) ImGui.SetTooltip("Copy Widget Settings");
+        if (ImGui.IsItemHovered()) ImGui.SetTooltip("複製元件設定");
 
     }
 
@@ -160,7 +160,7 @@ public partial class ConfigWindow
                 UpdateFlag |= Reset | UpdateFlags.Save;
             }
 
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Paste Copied Settings");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("貼上已複製的設定");
         }
         else IconButtonDisabled(PaintRoller);
     }

@@ -37,10 +37,10 @@ public class WidgetDropdown : BranchingDropdown
 
         SubMenus =
         [
-            ("Counters", Counter),
-            ("Bars & Timers", GaugeBar),
-            ("State Indicators", State),
-            ("Multi-Component", MultiComponent)
+            ("計數器", Counter),
+            ("量譜與計時器", GaugeBar),
+            ("狀態指示器", State),
+            ("多元件", MultiComponent)
         ];
     }
 

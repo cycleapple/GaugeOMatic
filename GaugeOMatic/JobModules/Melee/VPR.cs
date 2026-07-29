@@ -66,7 +66,7 @@ public class VPRModule(TrackerManager trackerManager, TrackerConfig[] trackerCon
             if (TweakConfigs.VPR0ColorCode)
             {
                 ImGui.SameLine();
-                ImGui.Text("Test");
+            ImGui.Text("測試");
                 ImGui.SameLine();
                 if (ImGui.Checkbox("##TweakPreview", ref TweakConfigs.Preview))
                 {

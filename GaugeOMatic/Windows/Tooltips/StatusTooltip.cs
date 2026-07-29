@@ -12,7 +12,7 @@ public partial class StatusRef
     public override void TooltipHeaderText()
     {
         MulticolorText((Plain, Name), (Disabled, $" [{ID}]"));
-        ImGui.TextDisabled(AppliedTo == StatusActor.Target ? "On Enemy Target" : "On Self");
+        ImGui.TextDisabled(AppliedTo == StatusActor.Target ? "敵方目標上的效果" : "自身效果");
     }
 
     public override void DrawTooltipIcon(Vector2 startPos)
@@ -30,13 +30,13 @@ public partial class StatusRef
 
     public override bool UseCounterAsState() => MaxStacks <= 1;
 
-    public override void PrintStateDesc() => ImGui.Text("Shows if active");
+    public override void PrintStateDesc() => ImGui.Text("顯示是否啟用");
     public override void FooterContents()
     {
         var seeAlsoFiltered = SeeAlso?.Where(static s => ((StatusRef)s).HideFromDropdown == false).ToArray();
         if (seeAlsoFiltered?.Any() == true)
         {
-            ImGui.TextDisabled($"Also checks the following status effect{(seeAlsoFiltered.Length > 1 ? "s" : "")}");
+            ImGui.TextDisabled("同時檢查下列狀態效果");
             foreach (var id in seeAlsoFiltered)
             {
                 var statusRef = (StatusRef)id;
@@ -59,9 +59,9 @@ public partial class StatusRef
         }
     }
 
-    public override void PrintCounterDesc() => ImGui.Text($"Shows stacks ({MaxStacks})");
+    public override void PrintCounterDesc() => ImGui.Text($"顯示層數（{MaxStacks}）");
     public override void PrintBarTimerDesc()
     {
-        ImGui.Text(MaxTime > 0 ? $"Shows time remaining ({MaxTime}s)" : "Fills if active");
+        ImGui.Text(MaxTime > 0 ? $"顯示剩餘時間（{MaxTime} 秒）" : "啟用時填滿");
     }
 }

@@ -55,8 +55,8 @@ public class BLMModule(TrackerManager trackerManager, TrackerConfig[] trackerCon
         ToggleControls("Color MP bar by element", ref TweakConfigs.BLM0MpColor);
         if (TweakConfigs.BLM0MpColor)
         {
-            ImGuiComponents.HelpMarker("Changes the color of the MP bar to match your current element",FontAwesomeIcon.QuestionCircle); ImGui.SameLine();
-            ImGui.Text("Test");
+            ImGuiComponents.HelpMarker("依目前元素狀態變更魔力值量條顏色",FontAwesomeIcon.QuestionCircle); ImGui.SameLine();
+            ImGui.Text("測試");
             ImGui.SameLine();
             if (ImGui.Checkbox("##TweakPreview", ref TweakConfigs.Preview))
             {

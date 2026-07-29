@@ -57,7 +57,7 @@ public class NINModule(TrackerManager trackerManager, TrackerConfig[] trackerCon
             ImGuiComponents.HelpMarker("Changes the color of the gauge while the Higi buff is active.",FontAwesomeIcon.QuestionCircle);
 
             ImGui.SameLine();
-            ImGui.Text("Test");
+            ImGui.Text("測試");
             ImGui.SameLine();
             if (ImGui.Checkbox("##TweakPreview", ref TweakConfigs.Preview)) UpdateFlag |= UpdateFlags.Save;
 

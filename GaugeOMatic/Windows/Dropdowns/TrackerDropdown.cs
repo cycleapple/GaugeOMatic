@@ -1,5 +1,6 @@
 using GaugeOMatic.GameData;
 using GaugeOMatic.Trackers;
+using GaugeOMatic.Utility;
 using Dalamud.Bindings.ImGui;
 using System;
 using System.Collections.Generic;
@@ -92,17 +93,17 @@ public class TrackerDropdown : BranchingDropdown
         var (label, options) = SubMenus[i];
         if (options.Count == 0) return;
 
-        if (!ImGui.BeginMenu($"{label}##{Hash}{label}Menu")) return;
+        if (!ImGui.BeginMenu($"{UiText.Translate(label)}##{Hash}{label}Menu")) return;
 
         if (label == "Actions")
         {
             ImGui.SetNextItemWidth(200f);
-            ImGui.InputTextWithHint("##ActionSearch", "Search...", ref ActionSearchString, 64);
+            ImGui.InputTextWithHint("##ActionSearch", "搜尋……", ref ActionSearchString, 64);
         }
         else if (label == "Status Effects")
         {
             ImGui.SetNextItemWidth(200f);
-            ImGui.InputTextWithHint("##StatusSearch", "Search...", ref StatusSearchString, 64);
+            ImGui.InputTextWithHint("##StatusSearch", "搜尋……", ref StatusSearchString, 64);
         }
 
         Func<MenuOption, bool> filter = label switch
@@ -114,7 +115,7 @@ public class TrackerDropdown : BranchingDropdown
 
         foreach (var o in options.Where(filter))
         {
-            if (ImGui.MenuItem($"{o.Name}##{Hash}Status{o.ItemId}"))
+            if (ImGui.MenuItem($"{UiText.Translate(o.Name)}##{Hash}Status{o.ItemId}"))
             {
                 Tracker.TrackerConfig.ItemId = o.ItemId;
                 Tracker.TrackerConfig.TrackerType = o.TrackerType;
@@ -127,5 +128,5 @@ public class TrackerDropdown : BranchingDropdown
         ImGui.EndMenu();
     }
 
-    public override string DropdownText(string fallback) => Tracker.DisplayAttr.Name;
+    public override string DropdownText(string fallback) => UiText.Translate(Tracker.DisplayAttr.Name);
 }

@@ -218,7 +218,7 @@ public partial class ConfigWindow
 
         if (ImGui.IsItemHovered())
         {
-            ImGui.SetTooltip("Shift-Click to Delete");
+            ImGui.SetTooltip("Shift + 點擊即可刪除");
             if (shift) tracker.Widget?.DrawBounds(new ColorRGB(255, 0, 0).ToABGR, 2);
         }
     }
@@ -231,6 +231,6 @@ public partial class ConfigWindow
             tracker.TrackerConfig.Enabled = enabled;
             UpdateFlag |= Reset | UpdateFlags.Save;
         }
-        if (ImGui.IsItemHovered()) ImGui.SetTooltip("Enable/Disable");
+        if (ImGui.IsItemHovered()) ImGui.SetTooltip("啟用／停用");
     }
 }

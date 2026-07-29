@@ -1,6 +1,7 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Bindings.ImGui;
+using GaugeOMatic.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -38,7 +39,7 @@ public static class WidgetUI
     {
         ImGui.TableNextRow();
         ImGui.TableNextColumn();
-        TextRightAligned(label.IndexOf('#') > 0 ? label[..label.IndexOf('#')] : label);
+        TextRightAligned(UiText.Translate(label.IndexOf('#') > 0 ? label[..label.IndexOf('#')] : label));
         ImGui.TableNextColumn();
     }
 
@@ -62,7 +63,7 @@ public static class WidgetUI
         for (var i = 0; i < bools.Count; i++)
         {
             var b = bools[i];
-            if (ImGui.Checkbox($"{boolNames[i]}##Bool{i}{label}", ref b))
+            if (ImGui.Checkbox($"{UiText.Translate(boolNames[i])}##Bool{i}{label}", ref b))
             {
                 UpdateFlag |= Save;
                 bools[i] = b;
@@ -161,7 +162,8 @@ public static class WidgetUI
 
         ImGui.SetNextItemWidth(142 * GlobalScale);
         var i = options.IndexOf(val);
-        if (ImGui.Combo($"##{label}", ref i, optionNames.ToArray(), optionNames.Count))
+        var translatedOptions = optionNames.ConvertAll(UiText.Translate);
+        if (ImGui.Combo($"##{label}", ref i, translatedOptions.ToArray(), translatedOptions.Count))
         {
             UpdateFlag |= Save;
             val = options[i];
@@ -176,7 +178,7 @@ public static class WidgetUI
         LabelColumn(label);
 
         ImGui.SetNextItemWidth(142f * GlobalScale);
-        if (ImGui.InputTextWithHint($"##{label}", hintText, ref str, 40))
+        if (ImGui.InputTextWithHint($"##{label}", UiText.Translate(hintText), ref str, 40))
         {
             UpdateFlag |= Save;
             return true;
@@ -273,7 +275,7 @@ public static class WidgetUI
             var option = options[i];
             var name = names[i];
             if (i > 0 && sameLine) ImGui.SameLine();
-            if (ImGui.RadioButton($"{name}##{label}{option}", val is not null && val.Equals(option)))
+            if (ImGui.RadioButton($"{UiText.Translate(name)}##{label}{option}", val is not null && val.Equals(option)))
             {
                 val = option;
                 UpdateFlag |= Save;
@@ -385,7 +387,7 @@ public static class WidgetUI
 
         using (ImRaii.PushColor(Text, new Vector4(1, 1, 1, 0.3f)))
         {
-            ImGui.TextUnformatted(headingText);
+            ImGui.TextUnformatted(UiText.Translate(headingText));
         }
     }
 }

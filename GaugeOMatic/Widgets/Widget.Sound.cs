@@ -35,7 +35,7 @@ public abstract partial class Widget
             ImGui.TableNextColumn();
             using (ImRaii.TextWrapPos(ImGui.GetWindowSize().X - 10))
             {
-                ImGui.TextWrapped($"Sound effect #{soundId} will not be played. It should never be played. We will not play it. We will not help you play it.");
+            ImGui.TextWrapped($"不會播放音效 #{soundId}。此音效不應被播放，本插件也不會協助播放。");
             }
         }
         else

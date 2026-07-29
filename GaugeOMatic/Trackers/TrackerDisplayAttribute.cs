@@ -91,14 +91,14 @@ public class TrackerDisplayAttribute : Attribute
 
                     using (var gr = ImRaii.Group())
                     {
-                        if (gr.Success) ImGui.Text(heading);
+                    if (gr.Success) ImGui.Text(UiText.Translate(heading));
                     }
 
                     ImGui.SetCursorPosY(startPos.Y + (50 * GlobalScale));
 
                     if (w1 != null || w2 != null || w3 != null) WidgetBehaviorTable(w1, w2, w3);
 
-                    if (footer != null) ImGui.TextDisabled(footer);
+                    if (footer != null) ImGui.TextDisabled(UiText.Translate(footer));
                 }
             }
         }
@@ -106,7 +106,7 @@ public class TrackerDisplayAttribute : Attribute
 
     public static void WidgetBehaviorTable(string? barDesc, string? counterDesc, string? stateDesc)
     {
-        ImGui.TextDisabled("Widget Behavior");
+        ImGui.TextDisabled("元件行為");
 
         using var table = ImRaii.Table("BehaviorTable", 2);
         if (table.Success)
@@ -118,27 +118,27 @@ public class TrackerDisplayAttribute : Attribute
             {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.Text("Bar / Timer:");
+                ImGui.Text("量條／計時器：");
                 ImGui.TableNextColumn();
-                ImGui.Text(barDesc);
+                ImGui.Text(UiText.Translate(barDesc));
             }
 
             if (counterDesc != null)
             {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.Text("Counter:");
+                ImGui.Text("計數器：");
                 ImGui.TableNextColumn();
-                ImGui.Text(counterDesc);
+                ImGui.Text(UiText.Translate(counterDesc));
             }
 
             if (stateDesc != null)
             {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.Text("State Indicator:");
+                ImGui.Text("狀態指示器：");
                 ImGui.TableNextColumn();
-                ImGui.Text(stateDesc);
+                ImGui.Text(UiText.Translate(stateDesc));
             }
         }
     }

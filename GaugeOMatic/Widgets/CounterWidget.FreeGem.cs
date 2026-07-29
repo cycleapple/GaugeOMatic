@@ -122,7 +122,7 @@ public abstract class FreeGemCounter(Tracker tracker) : CounterWidget(tracker)
         else if (ImGuiHelpy.IconButton("##decrement", ChevronLeft)) index--;
 
         ImGui.SameLine(0,3);
-        ImGui.Text($"{StackTerm} #{index + 1}");
+                ImGui.Text($"{UiText.Translate(StackTerm)} #{index + 1}");
         ImGui.SameLine(0,3);
 
         if (index >= Stacks.Count - 1) ImGuiHelpy.IconButtonDisabled(ChevronRight);

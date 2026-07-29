@@ -1,5 +1,6 @@
 using GaugeOMatic.Trackers;
 using GaugeOMatic.Widgets;
+using GaugeOMatic.Utility;
 using Dalamud.Bindings.ImGui;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,12 +52,12 @@ public class WidgetDropdown : BranchingDropdown
         if (tag == MultiComponent) MultiCompSubMenu(label);
         else
         {
-            if (ImGui.BeginMenu($"{label}##{Hash}{label}Menu"))
+            if (ImGui.BeginMenu($"{UiText.Translate(label)}##{Hash}{label}Menu"))
             {
                 var widgets = AvailableWidgets.Where(w => w.Value.WidgetTags.HasFlag(tag))
                                               .OrderBy(static w => w.Value.DisplayName);
 
-                foreach (var w in widgets.Where(static w => ImGui.MenuItem(w.Value.DisplayName)))
+                foreach (var w in widgets.Where(static w => ImGui.MenuItem($"{UiText.Translate(w.Value.DisplayName)}##{w.Value.DisplayName}")))
                 {
                     Tracker.WidgetType = w.Key;
                     UpdateFlag |= Reset | Save;
@@ -69,19 +70,19 @@ public class WidgetDropdown : BranchingDropdown
 
     public void MultiCompSubMenu(string label)
     {
-        if (ImGui.BeginMenu($"{label}##{Hash}{label}Menu"))
+        if (ImGui.BeginMenu($"{UiText.Translate(label)}##{Hash}{label}Menu"))
         {
             foreach (var (key, name) in MultiCompDict)
             {
                 using (ImRaii.PushColor(ImGuiCol.Border, new Vector4(0)))
                 {
-                    if (ImGui.BeginMenu($"{name}##{Hash}{label}{key}Menu"))
+                    if (ImGui.BeginMenu($"{UiText.Translate(name)}##{Hash}{label}{key}Menu"))
                     {
                         foreach (var w in AvailableWidgets
                                           .Where(w => w.Value.WidgetTags.HasFlag(MultiComponent) &&
                                                       w.Value.MultiCompData?.Key == key)
                                           .OrderBy(static w => w.Value.MultiCompData?.Index)
-                                          .Where(static w => ImGui.MenuItem(w.Value.DisplayName)))
+                                          .Where(static w => ImGui.MenuItem($"{UiText.Translate(w.Value.DisplayName)}##{w.Value.DisplayName}")))
                         {
                             Tracker.WidgetType = w.Key;
                             UpdateFlag |= Reset | Save;
@@ -96,5 +97,5 @@ public class WidgetDropdown : BranchingDropdown
         }
     }
 
-    public override string DropdownText(string fallback) => WidgetList.TryGetValue(Tracker.WidgetType ?? "", out var attr) ? attr.DisplayName : fallback;
+    public override string DropdownText(string fallback) => WidgetList.TryGetValue(Tracker.WidgetType ?? "", out var attr) ? UiText.Translate(attr.DisplayName) : fallback;
 }

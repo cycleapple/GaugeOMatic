@@ -1,6 +1,7 @@
 using GaugeOMatic.Config;
 using GaugeOMatic.GameData;
 using GaugeOMatic.JobModules;
+using GaugeOMatic.Utility;
 using GaugeOMatic.Widgets;
 using GaugeOMatic.Windows;
 using GaugeOMatic.Windows.Dropdowns;
@@ -79,7 +80,7 @@ public abstract partial class Tracker : IDisposable
 
     public void CreateWindow(Widget widget, Configuration configuration)
     {
-        Window = new(this, widget, configuration, $"{DisplayAttr.Name}##{GetHashCode()}");
+        Window = new(this, widget, configuration, $"{UiText.Translate(DisplayAttr.Name)}##{GetHashCode()}");
         Window.Size = new(300, 600);
         WindowSystem.AddWindow(Window);
     }

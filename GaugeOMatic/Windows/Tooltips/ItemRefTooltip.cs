@@ -36,7 +36,7 @@ public abstract partial class ItemRef
 
     public void WidgetBehaviorTable()
     {
-        ImGui.TextDisabled("Widget Behavior");
+        ImGui.TextDisabled("元件行為");
 
         using var table = ImRaii.Table("BehaviorTable", 2);
         if (table.Success) {
@@ -45,14 +45,14 @@ public abstract partial class ItemRef
 
             ImGui.TableNextRow();
             ImGui.TableNextColumn();
-            ImGui.Text("Bar / Timer:");
+            ImGui.Text("量條／計時器：");
 
             ImGui.TableNextColumn();
             PrintBarTimerDesc();
 
             ImGui.TableNextRow();
             ImGui.TableNextColumn();
-            ImGui.Text("Counter:");
+            ImGui.Text("計數器：");
 
             ImGui.TableNextColumn();
             if (UseCounterAsState())
@@ -62,7 +62,7 @@ public abstract partial class ItemRef
 
             ImGui.TableNextRow();
             ImGui.TableNextColumn();
-            ImGui.Text("State Indicator:");
+            ImGui.Text("狀態指示器：");
             ImGui.TableNextColumn();
             PrintStateDesc();
         }

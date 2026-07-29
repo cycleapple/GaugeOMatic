@@ -16,13 +16,13 @@ public partial class ActionRef
 {
     public Dictionary<ActionFlags, string> FlagNames = new()
     {
-        { LongCooldown, "Cooldown" },
-        { HasCharges, "Charges" },
-        { ComboBonus, "Combo" },
-        { Unassignable, "Unassignable" },
-        { RequiresStatus, "Status-Based" },
-        { CanGetAnts, "Conditional" },
-        { RoleAction, "Role" }
+        { LongCooldown, "冷卻" },
+        { HasCharges, "可用次數" },
+        { ComboBonus, "連擊" },
+        { Unassignable, "無法配置" },
+        { RequiresStatus, "依狀態判定" },
+        { CanGetAnts, "條件式" },
+        { RoleAction, "職能技能" }
     };
 
     public static IDalamudTextureWrap? FrameTex => TextureProvider.GetFromFile(Path.Combine(PluginDirPath, @"TextureAssets\iconFrame.png"))
@@ -65,7 +65,7 @@ public partial class ActionRef
 
         if (barType == StatusTimer)
         {
-            ImGui.TextColored(Plain, "Shows");
+            ImGui.TextColored(Plain, "顯示");
             ImGui.SameLine(0,3);
             if (ReadyStatus?.Icon != null)
             {
@@ -74,22 +74,22 @@ public partial class ActionRef
             }
             ImGui.TextColored(Yellow, ReadyStatus?.Name ?? "?");
             ImGui.SameLine(0,3);
-            ImGui.TextColored(Plain, "timer");
+            ImGui.TextColored(Plain, "的計時器");
         }
-        else if (barType == ComboTimer) ImGui.Text("Shows combo time remaining for this action");
-        else ImGui.Text($"Shows recast time remaining ({LastKnownCooldown}s)");
+        else if (barType == ComboTimer) ImGui.Text("顯示此技能的剩餘連擊時間");
+        else ImGui.Text($"顯示剩餘復唱時間（{LastKnownCooldown} 秒）");
     }
 
-    public override void PrintCounterDesc() => ImGui.Text($"Shows Charges ({GetMaxCharges()})");
+    public override void PrintCounterDesc() => ImGui.Text($"顯示可用次數（{GetMaxCharges()}）");
 
-    public override void PrintStateDesc() => ImGui.Text("Shows if ready");
+    public override void PrintStateDesc() => ImGui.Text("顯示是否可用");
 
     public override void FooterContents()
     {
         var readyStatus = ReadyStatus?.Name ?? "?";
-        ImGui.TextDisabled("Ready Conditions");
+        ImGui.TextDisabled("可用條件");
 
-        if (HasFlag(TransformedButton)) MulticolorText((Plain, "•"), (Orange, GetBaseAction().Name), (Plain, "has changed to this action"));
+        if (HasFlag(TransformedButton)) MulticolorText((Plain, "•"), (Orange, GetBaseAction().Name), (Plain, "???????"));
         if (HasFlag(RequiresStatus) && readyStatus.Length > 1)
         {
 
@@ -100,15 +100,15 @@ public partial class ActionRef
                 DrawGameIcon(ReadyStatus.Icon.Value, ImGui.GetFontSize() / GlobalScale);
                 ImGui.SameLine(0,3);
             }
-            MulticolorText((Yellow, readyStatus), (Plain, "is active"));
+            MulticolorText((Yellow, readyStatus), (Plain, "???"));
         }
 
-        if (HasFlag(ComboBonus)) ImGui.Text("• This action is the next step in an active combo");
-        else if (HasFlag(CanGetAnts)) ImGui.Text("• This action is highlighted");
+        if (HasFlag(ComboBonus)) ImGui.Text("• ????????????");
+        else if (HasFlag(CanGetAnts)) ImGui.Text("• ?????????");
 
-        if (HasFlag(HasCharges)) ImGui.Text("• At least one charge is available");
-        else if (HasFlag(LongCooldown)) ImGui.Text("• This action is off cooldown");
+        if (HasFlag(HasCharges)) ImGui.Text("• ?????????");
+        else if (HasFlag(LongCooldown)) ImGui.Text("• ????????");
 
-        if (HasFlag(CostsMP)) ImGui.Text($"• Enough MP is available (Current Cost: {GetActionCost()})");
+        if (HasFlag(CostsMP)) ImGui.Text($"• ????????????{GetActionCost()}?");
     }
 }

@@ -22,7 +22,7 @@ public class PresetWindow : Window, IDisposable
     public TrackerManager TrackerManager;
     public Configuration Configuration;
 
-    public PresetWindow(TrackerManager trackerManager) : base("Gauge-O-Matic Presets")
+    public PresetWindow(TrackerManager trackerManager) : base("Gauge-O-Matic 預設")
     {
         TrackerManager = trackerManager;
         Configuration = TrackerManager.Configuration;
@@ -69,7 +69,7 @@ public class PresetWindow : Window, IDisposable
                 UIData.NewPresetName = string.IsNullOrWhiteSpace(name) ? preset.Name : name;
 
             ImGui.SameLine();
-            if (ImGui.Button("Rename##Save"))
+            if (ImGui.Button("重新命名##Save"))
             {
                 Configuration.SavedPresets.Remove(preset);
                 preset.Name = UIData.NewPresetName ?? preset.Name;
@@ -91,21 +91,21 @@ public class PresetWindow : Window, IDisposable
             var filter = Configuration.PresetFiltering;
 
             ImGui.SameLine();
-            if (ImGui.RadioButton("All", ref filter, 0))
+            if (ImGui.RadioButton("全部##All", ref filter, 0))
             {
                 Configuration.PresetFiltering = 0;
                 Configuration.Save();
             }
 
             ImGui.SameLine();
-            if (ImGui.RadioButton("Role Only", ref filter, 1))
+            if (ImGui.RadioButton("僅相同職能##RoleOnly", ref filter, 1))
             {
                 Configuration.PresetFiltering = 1;
                 Configuration.Save();
             }
 
             ImGui.SameLine();
-            if (ImGui.RadioButton("Job Only", ref filter, 2))
+            if (ImGui.RadioButton("僅相同職業##JobOnly", ref filter, 2))
             {
                 Configuration.PresetFiltering = 2;
                 Configuration.Save();
@@ -154,7 +154,7 @@ public class PresetWindow : Window, IDisposable
                     }
 
                     ImGui.SameLine();
-                    if (IconButtonWithText(SignOutAlt, "Export to clipboard"))
+                    if (IconButtonWithText(SignOutAlt, "匯出至剪貼簿##ExportClipboard"))
                     {
                         ImGui.SetClipboardText(selectedPreset.ExportStr());
                     }
@@ -162,10 +162,10 @@ public class PresetWindow : Window, IDisposable
                     ImGui.Spacing();
                     DisplayPresetContents(module, selectedPreset);
                     ImGui.Spacing();
-                    if (IconButtonWithText(Plus, $"Add all to {module.Abbr}"))
+                    if (IconButtonWithText(Plus, $"全部加入至 {module.Abbr}##AddAll"))
                         ApplyPreset(module, selectedPreset.Clone());
                     ImGui.SameLine();
-                    if (IconButtonWithText(PaintRoller, "Overwrite Current"))
+                    if (IconButtonWithText(PaintRoller, "覆寫目前設定##OverwriteCurrent"))
                         ApplyPreset(module, selectedPreset.Clone(), true);
                 }
             }
@@ -179,10 +179,10 @@ public class PresetWindow : Window, IDisposable
         {
             ImGui.TableNextRow();
             ImGui.TableNextColumn();
-            ImGui.TextColored(new Vector4(1, 1, 1, 0.6f), "TRACKER");
+            ImGui.TextColored(new Vector4(1, 1, 1, 0.6f), "追蹤器");
 
             ImGui.TableNextColumn();
-            ImGui.TextColored(new Vector4(1, 1, 1, 0.6f), "WIDGET");
+            ImGui.TextColored(new Vector4(1, 1, 1, 0.6f), "元件");
 
             foreach (var trackerConfig in selectedPreset.Trackers)
             {
@@ -195,7 +195,7 @@ public class PresetWindow : Window, IDisposable
                 if (ImGui.IsItemHovered()) trackerConfig.DrawTooltip();
 
                 ImGui.TextColored(trackerConfig.JobRoleMatch(module) ? new(1) : new Vector4(1, 1, 1, 0.3f),
-                                  trackerConfig.GetDisplayAttr().Name);
+                                  UiText.Translate(trackerConfig.GetDisplayAttr().Name));
                 if (ImGui.IsItemHovered()) trackerConfig.DrawTooltip();
 
                 ImGui.TableNextColumn();
@@ -204,7 +204,7 @@ public class PresetWindow : Window, IDisposable
                 if (trackerConfig.WidgetType != null)
                 {
                     ImGui.SameLine();
-                    ImGui.Text($"{trackerConfig.WidgetDisplayName}");
+                    ImGui.Text(UiText.Translate(trackerConfig.WidgetDisplayName));
                 }
             }
         }
@@ -220,7 +220,7 @@ public class PresetWindow : Window, IDisposable
                 ImGui.SetClipboardText(WidgetClipboard);
             }
 
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Copy Widget Settings");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("複製元件設定");
         }
 
         void AddTrackerButton(TrackerConfig trackerConfig)
@@ -232,7 +232,7 @@ public class PresetWindow : Window, IDisposable
                 else module.AddBlankTracker();
             }
 
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Add " + trackerConfig.GetDisplayAttr().Name);
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("新增 " + UiText.Translate(trackerConfig.GetDisplayAttr().Name));
         }
     }
 
@@ -262,24 +262,24 @@ public class PresetWindow : Window, IDisposable
         using var gr = ImRaii.Group();
         if (gr.Success)
         {
-            ImGui.TextColored(new Vector4(1, 1, 1, 0.6f), "ADD PRESETS");
+            ImGui.TextColored(new Vector4(1, 1, 1, 0.6f), "新增預設");
             var saveName = UIData.SaveName;
-            ImGui.Text($"Save a preset from your current {module.Abbr} trackers:");
+            ImGui.Text($"將目前的 {module.Abbr} 追蹤器儲存為預設：");
             ImGui.SetNextItemWidth(200f * GlobalScale);
-            if (ImGui.InputTextWithHint("##SaveName", "New Preset Name", ref saveName, (int)30u))
+            if (ImGui.InputTextWithHint("##SaveName", "新預設名稱", ref saveName, (int)30u))
                 UIData.SaveName = saveName;
             ImGui.SameLine();
-            if (IconButtonWithText(Save, "Save")) SaveNewPreset(module, saveName);
+            if (IconButtonWithText(Save, "儲存##SavePreset")) SaveNewPreset(module, saveName);
 
             ImGui.Spacing();
-            ImGui.Text("Import a preset from the clipboard:");
-            if (IconButtonWithText(SignInAlt, "Import From Clipboard")) ImportNewPreset(ImGui.GetClipboardText());
+            ImGui.Text("從剪貼簿匯入預設：");
+            if (IconButtonWithText(SignInAlt, "從剪貼簿匯入##ImportClipboard")) ImportNewPreset(ImGui.GetClipboardText());
         }
     }
 
     private void SaveNewPreset(JobModule module, string saveName)
     {
-        var newPreset = new Preset(module.TrackerConfigList, saveName.Length == 0 ? "New Preset" : saveName);
+        var newPreset = new Preset(module.TrackerConfigList, saveName.Length == 0 ? "新預設" : saveName);
         var hash = newPreset.ExportStr().GetHashCode();
 
         var dup = false;
@@ -309,7 +309,7 @@ public class PresetWindow : Window, IDisposable
             {
                 if (preset.ExportStr().GetHashCode() != hash) continue;
 
-                UIData.ImportHintText = "Already have it!";
+                UIData.ImportHintText = "此預設已存在！";
                 dup = true;
                 break;
             }
@@ -319,17 +319,17 @@ public class PresetWindow : Window, IDisposable
                 var importResult = new Preset(importString, true);
                 if (importResult.Trackers.Length > 0)
                 {
-                    if (importResult.Name.Length == 0) importResult.Name = "New Preset";
+                    if (importResult.Name.Length == 0) importResult.Name = "新預設";
                     Configuration.SavedPresets.Add(importResult);
                     UIData.PresetList = BuildPresetList();
                     Configuration.Save();
-                    UIData.ImportHintText = "Imported!";
+                    UIData.ImportHintText = "匯入完成！";
                 }
             }
         }
         catch (Exception ex)
         {
-            UIData.ImportHintText = "Whoops, invalid input!";
+            UIData.ImportHintText = "輸入內容無效！";
             Log.Error(ex.Message);
         }
 
@@ -341,7 +341,7 @@ public class PresetWindow : Window, IDisposable
         public string? NewPresetName = null;
         public List<Preset> PresetList = [];
         public int PresetSelectedIndex = 0;
-        public string ImportHintText { get; set; } = "Paste Here";
+        public string ImportHintText { get; set; } = "貼到這裡";
         public string ImportString { get; set; } = "";
         public string SaveName = "";
 

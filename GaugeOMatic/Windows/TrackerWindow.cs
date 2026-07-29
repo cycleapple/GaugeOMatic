@@ -66,13 +66,13 @@ public class TrackerWindow : Window, IDisposable
 
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGuiHelpy.TextRightAligned("Widget");
+                ImGuiHelpy.TextRightAligned("元件");
                 ImGui.TableNextColumn();
-                Tracker.WidgetMenuWindow.Draw("[Select Widget]", 182f);
+                Tracker.WidgetMenuWindow.Draw("[選擇元件]", 182f);
 
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGuiHelpy.TextRightAligned("Pinned to:", true);
+                ImGuiHelpy.TextRightAligned("固定至：", true);
                 ImGui.TableNextColumn();
                 if (Tracker.AddonDropdown.Draw($"AddonSelect{GetHashCode()}", 182f))
                 {
@@ -87,11 +87,11 @@ public class TrackerWindow : Window, IDisposable
             }
         }
 
-        ImGui.TextDisabled("Widget Settings");
+        ImGui.TextDisabled("元件設定");
         ImGui.SameLine();
 
         ImGui.SetCursorPosX(ImGui.GetCursorPosX() + ImGui.GetColumnWidth() - (80 * GlobalScale));
-        if (ImGuiComponents.IconButtonWithText(UndoAlt,"Default",null, null, null, new(80f,0)))
+        if (ImGuiComponents.IconButtonWithText(UndoAlt,"預設##Default",null, null, null, new(80f,0)))
         {
             Widget?.ResetConfigs();
             Widget?.ApplyConfigs();
@@ -104,7 +104,7 @@ public class TrackerWindow : Window, IDisposable
             using var tt = ImRaii.Tooltip();
             if (tt.Success)
             {
-                ImGui.TextUnformatted($"This will reset to the defaults for {Widget?.GetAttributes.DisplayName}.\nTo restore a particular preset for this tracker instead, use the Presets window.");
+                ImGui.TextUnformatted($"這會將 {UiText.Translate(Widget?.GetAttributes.DisplayName ?? string.Empty)} 重設為預設值。\n若要改為還原此追蹤器的特定預設，請使用「預設」視窗。");
             }
         }
 
@@ -114,7 +114,7 @@ public class TrackerWindow : Window, IDisposable
     {
         ImGui.TableNextRow();
         ImGui.TableNextColumn();
-        ImGuiHelpy.TextRightAligned("Test");
+        ImGuiHelpy.TextRightAligned("測試");
         var preview = Tracker.TrackerConfig.Preview;
         var previewValue = Tracker.TrackerConfig.PreviewValue;
         ImGui.TableNextColumn();
@@ -181,7 +181,7 @@ public class TrackerWindow : Window, IDisposable
                     using var tt = ImRaii.Tooltip();
                     if (tt.Success)
                     {
-                        ImGui.TextUnformatted(label);
+                        ImGui.TextUnformatted(UiText.Translate(label));
                     }
                 }
 
@@ -194,7 +194,7 @@ public class TrackerWindow : Window, IDisposable
     {
         ImGui.TableNextRow();
         ImGui.TableNextColumn();
-        ImGui.TextColored(new Vector4(1, 1, 1, 0.3f), "Display Rules");
+        ImGui.TextColored(new Vector4(1, 1, 1, 0.3f), "顯示規則");
         ImGui.TableNextColumn();
 
         var cond1 = RadioControls("Visibility", ref Tracker.TrackerConfig.HideOutsideCombatDuty, [false, true], ["Anytime", "Combat / Duty Only"]);

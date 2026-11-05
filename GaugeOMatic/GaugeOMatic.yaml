@@ -4,4 +4,4 @@ description: |-
   可在職業量譜中加入多種樣式的額外計數器、量譜與狀態指示器。
 punchline: 強化並自訂職業量譜。
 repo_url: https://github.com/ItsBexy/GaugeOMatic
-dalamud_api_level: 13
+dalamud_api_level: 14
